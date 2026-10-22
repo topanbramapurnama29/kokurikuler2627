@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Kokurikuler STEAM - SMPN 61 Bandung</title>
+    
+    <!-- Link Ikon FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* PENGATURAN DASAR & LATAR BELAKANG GAMBAR */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-image: url('bg-steam.png'); 
+            background-size: cover; 
+            background-position: center center; 
+            background-attachment: fixed; 
+            color: #1e293b; 
+            margin: 0; 
+            padding: 40px 20px 80px 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh;
+        }
+
+        /* EFEK GLASSMORPHISM (KACA TRANSPARAN) */
+        .container { 
+            width: 100%; 
+            max-width: 600px; 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
+            padding: 35px 30px; 
+            border-radius: 24px; 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); 
+            border: 1px solid rgba(255, 255, 255, 0.7); 
+        }
+
+        /* HEADER & LOGO */
+        .header { text-align: center; margin-bottom: 30px; }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px; 
+            margin-bottom: 20px;
+        }
+        
+        .header-logo {
+            height: 70px; 
+            width: auto;
+            object-fit: contain; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            background: rgba(255,255,255,0.9); 
+            padding: 5px; 
+        }
+        
+        .header-logo.main-badge { height: 90px; }
+
+        .school-title { font-size: 1.15rem; color: #334155; font-weight: 700; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        .main-title { font-size: 2.2rem; font-weight: 800; margin: 0; display: flex; justify-content: center; gap: 2px; text-shadow: 1px 1px 0px rgba(255,255,255,0.8); }
+        .steam-s { color: #0284c7; } .steam-t { color: #16a34a; } .steam-e { color: #ea580c; } .steam-a { color: #8b5cf6; } .steam-m { color: #dc2626; } 
+        .subtitle { font-size: 0.95rem; color: #475569; margin-top: 5px; font-weight: 600; }
+
+        /* KATEGORI KOTAK */
+        .category-section { 
+            background: rgba(255, 255, 255, 0.6); 
+            border-radius: 16px; 
+            padding: 20px; 
+            margin-bottom: 25px; 
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); 
+        }
+        .category-title { font-size: 1.2rem; font-weight: 800; margin-top: 0; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+        .category-desc { font-size: 0.85rem; color: #475569; margin-bottom: 15px; line-height: 1.4; font-weight: 500; }
+        
+        /* WARNA BORDER KATEGORI */
+        .cat-kegiatan { border-left: 6px solid #14b8a6; } 
+        .cat-modul { border-left: 6px solid #0284c7; } 
+        .cat-lkm { border-left: 6px solid #16a34a; }   
+        .cat-admin { border-left: 6px solid #ea580c; }
+        .cat-jadwal { border-left: 6px solid #8b5cf6; } 
+        .cat-sk { border-left: 6px solid #dc2626; }     
+
+        /* KOTAK TIPS, CATATAN, & KETERANGAN */
+        .tips-box { background: rgba(255, 247, 237, 0.8); border-left: 4px solid #f97316; padding: 12px 15px; border-radius: 8px; font-size: 0.85rem; color: #431407; margin-bottom: 15px; line-height: 1.4; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .tips-box strong { color: #c2410c; display: block; margin-bottom: 4px; }
+        .tips-box ol { margin: 6px 0 8px 0; padding-left: 22px; }
+        .tips-box em { font-size: 0.8rem; color: #9a3412; }
+        
+        .keterangan-box { background: rgba(236, 253, 245, 0.8); border-left: 4px solid #10b981; padding: 12px 15px; border-radius: 8px; font-size: 0.85rem; color: #064e3b; margin-bottom: 15px; line-height: 1.4; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .keterangan-box strong { color: #047857; display: block; margin-bottom: 4px; }
+        .keterangan-box ol { margin: 6px 0 0 0; padding-left: 22px; }
+        .keterangan-box li { margin-bottom: 5px; }
+        .keterangan-box code { font-family: monospace; background: rgba(255,255,255,0.9); padding: 2px 6px; border-radius: 4px; font-weight: bold; color: #b91c1c; border: 1px solid #a7f3d0; }
+
+        .catatan-kegiatan { background: rgba(204, 253, 246, 0.6); border-left: 4px solid #0d9488; color: #115e59; padding: 10px 15px; margin-top: 15px; border-radius: 8px; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; font-weight: 600; }
+
+        /* DESAIN KARTU TAUTAN */
+        .link-card { display: flex; align-items: stretch; background-color: rgba(255,255,255,0.9); border: 1px solid rgba(203, 213, 225, 0.6); border-radius: 10px; margin-bottom: 10px; overflow: hidden; transition: all 0.2s ease; }
+        .link-card:last-child { margin-bottom: 0; }
+        .link-card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+        .link-main { flex-grow: 1; padding: 14px 15px; color: #334155; text-decoration: none; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; }
+        
+        .action-btn { background: rgba(241, 245, 249, 0.8); border: none; border-left: 1px solid rgba(203, 213, 225, 0.6); width: 60px; color: #64748b; cursor: pointer; font-size: 1.2rem; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        
+        .cat-modul .link-main:hover, .cat-modul .action-btn:hover { background-color: #e0f2fe; color: #0369a1; }
+        .cat-lkm .link-main:hover, .cat-lkm .action-btn:hover { background-color: #dcfce7; color: #15803d; }
+        .cat-admin .link-main:hover, .cat-admin .action-btn:hover { background-color: #ffedd5; color: #c2410c; }
+
+        /* DESAIN TABEL DATA */
+        .table-responsive { overflow-x: auto; margin-bottom: 15px; border-radius: 8px; border: 1px solid rgba(203, 213, 225, 0.6); }
+        .scrollable-table-container { max-height: 300px; overflow-y: auto; border-radius: 8px; border: 1px solid rgba(203, 213, 225, 0.6); }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left; background: rgba(255,255,255,0.7); white-space: nowrap; }
+        .data-table th { background-color: rgba(241, 245, 249, 0.95); padding: 10px; color: #334155; position: sticky; top: 0; z-index: 1; border-bottom: 2px solid #cbd5e1; font-weight: 700; text-align: center;}
+        .data-table td { padding: 8px 10px; color: #475569; border-bottom: 1px solid rgba(203, 213, 225, 0.5); text-align: center; font-weight: 500; }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tr:hover td { background-color: rgba(255,255,255,1); }
+        
+        .text-left { text-align: left !important; }
+        .badge-kelas { display: inline-block; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 0.75rem; background: #e2e8f0; color: #475569;}
+        .jadwal-title { font-size: 0.85rem; font-weight: bold; color: #334155; margin-bottom: 8px; margin-top: 5px; }
+        
+        /* Sel Kosong/Hitam pada Jadwal */
+        .cell-disabled { background-color: rgba(203, 213, 225, 0.3) !important; color: transparent !important; }
+
+        /* FOOTER NEON EMAS */
+        .footer { text-align: center; margin-top: 20px; font-size: 0.85rem; color: #FFEA00; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 8px; text-shadow: 0 0 5px #FFD700, 0 0 10px #FF8C00, 0 0 15px #FF8C00, 1px 1px 2px #000000; }
+        .admin-lock { cursor: pointer; color: #ffffff; transition: 0.3s; padding: 5px; background: rgba(255,255,255,0.2); border-radius: 50%; }
+        .admin-lock:hover { color: #dc2626; background: rgba(255,255,255,0.9); }
+
+        /* TOMBOL BUKA AKSES PENILAIAN */
+        .btn-akses { display: inline-flex; align-items: center; gap: 8px; background-color: #ffffff; color: #475569; padding: 12px 15px; border-radius: 10px; border: 1px solid #cbd5e1; cursor: pointer; font-size: 0.9rem; font-weight: 700; transition: 0.2s; margin-bottom: 15px; width: 100%; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .btn-akses:hover { background-color: #f1f5f9; color: #ea580c; border-color: #ea580c; }
+
+        /* NOTIFIKASI & MODAL */
+        #toast { visibility: hidden; min-width: 250px; background-color: rgba(30, 41, 59, 0.9); backdrop-filter: blur(5px); color: #fff; text-align: center; border-radius: 8px; padding: 12px 20px; position: fixed; z-index: 1000; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 0.9rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); opacity: 0; transition: opacity 0.3s, bottom 0.3s, visibility 0.3s; font-weight: bold; }
+        #toast.show { visibility: visible; opacity: 1; bottom: 40px; }
+
+        #admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); justify-content: center; align-items: center; z-index: 2000; padding: 20px; box-sizing: border-box; }
+        .admin-content { background: #fff; padding: 25px; border-radius: 20px; width: 100%; max-width: 450px; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .admin-content h3 { margin-top: 0; color: #334155; text-align: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+        .admin-input-group { margin-bottom: 15px; }
+        .admin-input-group label { display: block; font-weight: bold; font-size: 0.85rem; margin-bottom: 5px; color: #475569; }
+        .admin-input-group input { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: monospace; font-size: 0.8rem; box-sizing: border-box; background: #f8fafc; }
+        .admin-btns { display: flex; gap: 10px; margin-top: 25px; }
+        .admin-btns button { flex: 1; padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 0.95rem; transition: 0.2s; }
+        .btn-save { background: #10b981; color: white; }
+        .btn-save:hover { background: #059669; }
+        .btn-cancel { background: #ef4444; color: white; }
+        .btn-cancel:hover { background: #dc2626; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header">
+            <div class="logo-container">
+                <img src="​disdik.png" alt="Logo Dinas Pendidikan" class="header-logo">
+                <img src="bg-steam.png" alt="Logo Tema STEM" class="header-logo main-badge">
+                <img src="Enam1.jpg" alt="Logo SMPN 61 Bandung" class="header-logo">
+            </div>
+
+            <div class="school-title">Kokurikuler SMPN 61 Bandung</div>
+            <h1 class="main-title">
+                <span class="steam-s">S</span><span class="steam-t">T</span><span class="steam-e">E</span><span class="steam-a">A</span><span class="steam-m">M</span>
+            </h1>
+            <div class="subtitle">Berkreasi • Berkarya • Berinovasi</div>
+        </div>
+
+        <!-- 1: JADWAL WAKTU KEGIATAN -->
+        <div class="category-section cat-kegiatan">
+            <h2 class="category-title"><i class="fa-solid fa-clock steam-t"></i> Jadwal Waktu Kegiatan</h2>
+            <div class="category-desc">Waktu pelaksanaan kegiatan kokurikuler setiap harinya.</div>
+            
+            <div class="jadwal-title">Minggu 1 (19/10/2026 - 23/10/2026)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Waktu</th>
+                            <th>Senin</th>
+                            <th>Selasa</th>
+                            <th>Rabu</th>
+                            <th>Kamis</th>
+                            <th>Jumat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>06.45-07.40</td><td>Upacara</td><td>Dhuha</td><td>LitNum</td><td>Geulisan</td><td>Senam</td>
+                        </tr>
+                        <tr>
+                            <td>08.00-09.30</td><td>Kokurikuler</td><td>Kokurikuler</td><td>Kokurikuler</td><td>Kokurikuler</td><td>Kokurikuler</td>
+                        </tr>
+                        <tr>
+                            <td>09.30-10.00</td><td>MBG</td><td>MBG</td><td>MBG</td><td>MBG</td><td>MBG</td>
+                        </tr>
+                        <tr>
+                            <td>10.00-12.30</td><td>Kokurikuler</td><td>Kokurikuler</td><td>Kokurikuler</td><td>Kokurikuler</td><td class="cell-disabled">-</td>
+                        </tr>
+                        <tr>
+                            <td>10.00-11.10</td><td class="cell-disabled">-</td><td class="cell-disabled">-</td><td class="cell-disabled">-</td><td class="cell-disabled">-</td><td>Kokurikuler</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="jadwal-title">Minggu 2 (26/10/2026 - 30/10/2026)</div>
+            <div class="table-responsive" style="margin-bottom: 0;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Waktu</th>
+                            <th>Senin</th>
+                            <th>Selasa</th>
+                            <th>Rabu</th>
+                            <th>Kamis</th>
+                            <th>Jumat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>06.45-07.40</td><td>Kewalikelasan</td><td>Dhuha</td><td>LitNum</td><td>Geulisan</td><td>Senam</td>
+                        </tr>
+                        <tr>
+                            <td>08.00-09.30</td><td>Kokurikuler</td><td>Kokurikuler</td><td>Kokurikuler</td><td>Kokurikuler</td><td>Kokurikuler</td>
+                        </tr>
+                        <tr>
+                            <td>09.30-10.00</td><td>MBG</td><td>MBG</td><td>MBG</td><td>MBG</td><td>MBG</td>
+                        </tr>
+                        <tr>
+                            <td>10.00-12.30</td><td>Kokurikuler</td><td>Kokurikuler</td><td>Kokurikuler</td><td>Kokurikuler</td><td class="cell-disabled">-</td>
+                        </tr>
+                        <tr>
+                            <td>10.00-11.10</td><td class="cell-disabled">-</td><td class="cell-disabled">-</td><td class="cell-disabled">-</td><td class="cell-disabled">-</td><td>Kokurikuler</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="catatan-kegiatan">
+                <i class="fa-solid fa-calendar-check"></i>
+                Catatan: Untuk hari Jumat, kegiatan kokurikuler hanya sampai pukul 11.10 WIB.
+            </div>
+        </div>
+
+        <!-- 2: JADWAL FASILITATOR -->
+        <div class="category-section cat-jadwal">
+            <h2 class="category-title"><i class="fa-regular fa-calendar-days steam-a"></i> Jadwal Fasilitator</h2>
+            <div class="category-desc">Jadwal pembagian kelas fasilitator.</div>
+            
+            <div class="jadwal-title">Minggu 1 (19/10/2026 - 23/10/2026)</div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Fasilitator</th>
+                            <th>Kelas</th>
+                            <th>Senin</th>
+                            <th>Selasa</th>
+                            <th>Rabu</th>
+                            <th>Kamis</th>
+                            <th>Jumat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-left">Teguh Triawan Perdana, S.Pd.,Gr.</td>
+                            <td><span class="badge-kelas">7</span></td>
+                            <td>7A</td><td>7B</td><td>7C</td><td>7D</td><td>7E</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Dika Andika, S.Pd,Gr</td>
+                            <td><span class="badge-kelas">8</span></td>
+                            <td>8A</td><td>8B</td><td>8C</td><td>8D</td><td>8E</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Agnesa Aulia Sutrisno, S.Pd.,Gr.</td>
+                            <td><span class="badge-kelas">9</span></td>
+                            <td>9A</td><td>9B</td><td>9C</td><td>9D</td><td>9E</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="jadwal-title">Minggu 2 (26/10/2026 - 30/10/2026)</div>
+            <div class="table-responsive" style="margin-bottom: 0;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Fasilitator</th>
+                            <th>Kelas</th>
+                            <th>Senin</th>
+                            <th>Selasa</th>
+                            <th>Rabu</th>
+                            <th>Kamis</th>
+                            <th>Jumat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-left">Teguh Triawan Perdana, S.Pd.,Gr.</td>
+                            <td><span class="badge-kelas">7</span></td>
+                            <td>7F</td><td>7G</td><td>7E</td><td>7F</td><td>7D</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Dika Andika, S.Pd,Gr</td>
+                            <td><span class="badge-kelas">8</span></td>
+                            <td>8E</td><td>8D</td><td>8C</td><td>8B</td><td>8A</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Agnesa Aulia Sutrisno, S.Pd.,Gr.</td>
+                            <td><span class="badge-kelas">9</span></td>
+                            <td>9F</td><td>9E</td><td>9D</td><td>9C</td><td>9B</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3: MODUL KOKURIKULER -->
+        <div class="category-section cat-modul">
+            <h2 class="category-title"><i class="fa-solid fa-book-open steam-s"></i> Modul Pembelajaran</h2>
+            <div class="category-desc">Kumpulan materi kokurikuler untuk fasilitator.</div>
+            
+            <div class="link-card">
+                <a href="https://drive.google.com/drive/folders/1i9mNyqpy130MnaDOY4OIx7LRAKZB5Aab" id="link-modul-7" class="link-main" target="_blank">Modul Kelas 7</a>
+                <button class="action-btn" id="copy-modul-7" onclick="copyLink('https://drive.google.com/drive/folders/1i9mNyqpy130MnaDOY4OIx7LRAKZB5Aab')" title="Salin Link"><i class="fa-regular fa-copy"></i></button>
+            </div>
+
+            <div class="link-card">
+                <a href="https://drive.google.com/drive/folders/1tf1RPkjGzaxftJJOqJW5ZZcwNOY7_rwy" id="link-modul-8" class="link-main" target="_blank">Modul Kelas 8</a>
+                <button class="action-btn" id="copy-modul-8" onclick="copyLink('https://drive.google.com/drive/folders/1tf1RPkjGzaxftJJOqJW5ZZcwNOY7_rwy')" title="Salin Link"><i class="fa-regular fa-copy"></i></button>
+            </div>
+
+            <div class="link-card">
+                <a href="https://drive.google.com/drive/folders/16F90PEh6qvhiYLOve1PJAnOAfUejThzZ" id="link-modul-9" class="link-main" target="_blank">Modul Kelas 9</a>
+                <button class="action-btn" id="copy-modul-9" onclick="copyLink('https://drive.google.com/drive/folders/16F90PEh6qvhiYLOve1PJAnOAfUejThzZ')" title="Salin Link"><i class="fa-regular fa-copy"></i></button>
+            </div>
+        </div>
+
+        <!-- 4: PENGUMPULAN -->
+        <div class="category-section cat-lkm">
+            <h2 class="category-title"><i class="fa-solid fa-folder-arrow-up steam-t"></i> Pengumpulan Tugas</h2>
+            <div class="category-desc">Tempat pengumpulan LKM, Jurnal, Dokumentasi, dan Kesepakatan Kelas.</div>
+            
+            <!-- KOTAK TIPS -->
+            <div class="tips-box">
+                <strong>💡 Tips membagikan link:</strong>
+                <ol>
+                    <li>Pilih jenjangnya.</li>
+                    <li>Pilih titik tiga pada kelas yang ingin dibagikan link pengumpulan tugas.</li>
+                    <li>Pilih link dan paste di grup kelasnya.</li>
+                </ol>
+                <em>Semoga membantu 🙏</em>
+            </div>
+
+            <!-- KOTAK KETERANGAN BARU -->
+            <div class="keterangan-box">
+                <strong>📌 Keterangan:</strong>
+                <ol>
+                    <li>Kesepakatan setiap kelas dikerjakan oleh ketua murid. Format pdf dengan nama file:<br>
+                    <code>KESEPAKATAN KELAS 8A.pdf</code></li>
+                    <li>LKM harian terdiri dari: tugas harian, jurnal, dokumentasi, rencana hari berikutnya. Format pdf dengan nama file:<br>
+                    <code>LKM 8A HARI 3 KELOMPOK 2.pdf</code></li>
+                    <li>Buku literasi diisi sesuai tugas hariannya sehingga harapannya tidak ada yang berdiam diri.</li>
+                </ol>
+            </div>
+            
+            <div class="link-card">
+                <a href="https://drive.google.com/drive/folders/1Q3qDVAQfZIMxzTy2KipdypnJGhQ5-QS8?usp=sharing" id="link-lkm-7" class="link-main" target="_blank">Folder Kelas 7</a>
+                <button class="action-btn" id="copy-lkm-7" onclick="copyLink('https://drive.google.com/drive/folders/1Q3qDVAQfZIMxzTy2KipdypnJGhQ5-QS8?usp=sharing')" title="Salin Link"><i class="fa-regular fa-copy"></i></button>
+            </div>
+
+            <div class="link-card">
+                <a href="https://drive.google.com/drive/folders/1tqgiUN7XGR1cMJHvSg1BWx_SCwqjfjB_?usp=drive_link" id="link-lkm-8" class="link-main" target="_blank">Folder Kelas 8</a>
+                <button class="action-btn" id="copy-lkm-8" onclick="copyLink('https://drive.google.com/drive/folders/1tqgiUN7XGR1cMJHvSg1BWx_SCwqjfjB_?usp=drive_link')" title="Salin Link"><i class="fa-regular fa-copy"></i></button>
+            </div>
+
+            <div class="link-card">
+                <a href="https://drive.google.com/drive/folders/1YVNcTO_rgci1eguRt7n-YHpjVYX7Tzz5?usp=drive_link" id="link-lkm-9" class="link-main" target="_blank">Folder Kelas 9</a>
+                <button class="action-btn" id="copy-lkm-9" onclick="copyLink('https://drive.google.com/drive/folders/1YVNcTO_rgci1eguRt7n-YHpjVYX7Tzz5?usp=drive_link')" title="Salin Link"><i class="fa-regular fa-copy"></i></button>
+            </div>
+        </div>
+
+        <!-- 5: ADMINISTRASI -->
+        <div class="category-section cat-admin">
+            <h2 class="category-title"><i class="fa-solid fa-clipboard-check steam-e"></i> Administrasi</h2>
+            <div class="category-desc">Formulir evaluasi dan pengisian nilai akhir.</div>
+            
+            <button id="btn-akses-nilai" class="btn-akses" onclick="bukaPenilaian()">
+                <i class="fa-solid fa-key"></i> Akses Folder Penilaian Guru
+            </button>
+
+            <div id="wrapper-penilaian" style="display: none;">
+                <div class="link-card">
+                    <a href="https://docs.google.com/spreadsheets/d/1ryIJSYC_vBZHNf9X9JsSOX8WrcpAEFHi/edit?usp=sharing" id="link-admin-nilai" class="link-main" target="_blank">Folder Penilaian</a>
+                    <button class="action-btn" id="copy-admin-nilai" onclick="copyLink('https://docs.google.com/spreadsheets/d/1ryIJSYC_vBZHNf9X9JsSOX8WrcpAEFHi/edit?usp=sharing')" title="Salin Link"><i class="fa-regular fa-copy"></i></button>
+                </div>
+            </div>
+
+            <div class="link-card">
+                <a href="https://forms.gle/tzj8j8dQBvtJufd47" id="link-admin-diag" class="link-main" target="_blank">Diagnostik Hari Terakhir</a>
+                <button class="action-btn" id="copy-admin-diag" onclick="copyLink('https://forms.gle/tzj8j8dQBvtJufd47')" title="Salin Link"><i class="fa-regular fa-copy"></i></button>
+            </div>
+
+            <div class="link-card">
+                <a href="https://drive.google.com/drive/folders/1mBKxu634SU6L-Y_Utg0j6Us65xPgUk-B" id="link-admin-ppid" class="link-main" target="_blank">Dokumentasi PPID</a>
+                <button class="action-btn" id="copy-admin-ppid" onclick="copyLink('https://drive.google.com/drive/folders/1mBKxu634SU6L-Y_Utg0j6Us65xPgUk-B')" title="Salin Link"><i class="fa-regular fa-copy"></i></button>
+            </div>
+        </div>
+
+        <!-- 6: SUSUNAN TIM -->
+        <div class="category-section cat-sk" style="margin-bottom: 0;">
+            <h2 class="category-title"><i class="fa-solid fa-users-gear steam-m"></i> Susunan Tim & Fasilitator</h2>
+            <div class="category-desc">Berdasarkan SK Penetapan Tugas Tambahan Kokurikuler 2026/2027.</div>
+            
+            <div class="scrollable-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th class="text-left">Nama</th>
+                            <th class="text-left">Tugas Tambahan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td class="text-left">Rissa Marissa, S.Pd., M.Pd.</td><td class="text-left">Penanggung Jawab</td></tr>
+                        <tr><td>2</td><td class="text-left">Arip Rohmat Hidayat, S.Pd., Gr.</td><td class="text-left">Ketua / Pengarah Program</td></tr>
+                        <tr><td>3</td><td class="text-left">Topan Bramapurnama, S.Pd.</td><td class="text-left">Koordinator Kokurikuler</td></tr>
+                        <tr><td>4</td><td class="text-left">Faizal Riza, S.E.</td><td class="text-left">Bendahara</td></tr>
+                        <tr><td>5</td><td class="text-left">Teguh Triawan Perdana, S.Pd.Gr, .</td><td class="text-left">Fasilitator Kelas 7</td></tr>
+                        <tr><td>6</td><td class="text-left">Dika Andika, S.Pd,Gr</td><td class="text-left">Fasilitator Kelas 8</td></tr>
+                        <tr><td>7</td><td class="text-left">Agnesa Aulia Sutrisno, S.Pd., Gr.</td><td class="text-left">Fasilitator Kelas 9</td></tr>
+                        <tr><td>8</td><td class="text-left">Fajrin Nurul Hanifah, S.Sn.Gr, .</td><td class="text-left">Dokumentasi</td></tr>
+                        <tr><td>9</td><td class="text-left">Hiki Rachmat Himam Suntoro, S.Pd.</td><td class="text-left">Publikasi dan Hasil Karya</td></tr>
+                        <tr><td>10</td><td class="text-left">Brata Santana, S.Pd.I</td><td class="text-left">Sarana dan Prasarana</td></tr>
+                        <tr><td>11</td><td class="text-left">Suryana, S.Pd</td><td class="text-left">Anggota</td></tr>
+                        <tr><td>12</td><td class="text-left">Ainna Maulida, S.Pd.</td><td class="text-left">Anggota</td></tr>
+                        <tr><td>13</td><td class="text-left">Rifki Muhammad Hafizh S.Pd.</td><td class="text-left">Anggota</td></tr>
+                        <tr><td>14</td><td class="text-left">Neng Siti Halimah, S.Pd.</td><td class="text-left">Fasilitator VII A</td></tr>
+                        <tr><td>15</td><td class="text-left">Siti Nurjanah, S.Pd.</td><td class="text-left">Fasilitator VII B</td></tr>
+                        <tr><td>16</td><td class="text-left">Heri Heryana, S.Pd.</td><td class="text-left">Fasilitator VII C</td></tr>
+                        <tr><td>17</td><td class="text-left">Ranti Prawirawati, S.T., Gr.</td><td class="text-left">Sekretaris dan Fasilitator VII D</td></tr>
+                        <tr><td>18</td><td class="text-left">Asikin Hermansyah, S.Pd.I.</td><td class="text-left">Fasilitator VII E</td></tr>
+                        <tr><td>19</td><td class="text-left">Nelis Hilma Munjiah, S.Pd.Gr, .</td><td class="text-left">Fasilitator VII F</td></tr>
+                        <tr><td>20</td><td class="text-left">Celyna Isnaeni Septia Puspa, S.Pd.</td><td class="text-left">Fasilitator VII G</td></tr>
+                        <tr><td>21</td><td class="text-left">Inggit Gustari S.Sn</td><td class="text-left">Fasilitator VIII A</td></tr>
+                        <tr><td>22</td><td class="text-left">Wita Monica Tantriani S.PdGr,</td><td class="text-left">Fasilitator VIII B</td></tr>
+                        <tr><td>23</td><td class="text-left">Reza Zulvikor, S.Pd., Gr.</td><td class="text-left">Fasilitator VIII C</td></tr>
+                        <tr><td>24</td><td class="text-left">Ir. Sri Mudjijani</td><td class="text-left">Fasilitator VIII D</td></tr>
+                        <tr><td>25</td><td class="text-left">Erva Cristina Irawati, S.Pd.Gr, .</td><td class="text-left">Fasilitator VIII E</td></tr>
+                        <tr><td>26</td><td class="text-left">Erna Rohmi Naimah, S.Pd.</td><td class="text-left">Fasilitator IX A</td></tr>
+                        <tr><td>27</td><td class="text-left">Deby Elsera, S.Pd.Gr, .</td><td class="text-left">Fasilitator IX B</td></tr>
+                        <tr><td>28</td><td class="text-left">Near Indrayani, S.S.</td><td class="text-left">Fasilitator IX C</td></tr>
+                        <tr><td>29</td><td class="text-left">Muhamad Ridwan, S.T.</td><td class="text-left">Fasilitator IX D</td></tr>
+                        <tr><td>30</td><td class="text-left">Devi Shopyani Isman, S.Pd.Gr, .</td><td class="text-left">Fasilitator IX E</td></tr>
+                        <tr><td>31</td><td class="text-left">Nia Kurnia Asih, S.Pd.</td><td class="text-left">Fasilitator IX F</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        &copy; 2026 Kokurikuler STEAM - SMPN 61 Bandung 
+        <i class="fa-solid fa-gear admin-lock" onclick="openAdmin()" title="Pengaturan Admin"></i>
+    </div>
+
+    <div id="toast"><i class="fa-solid fa-circle-check"></i> Link berhasil disalin!</div>
+
+    <div id="admin-modal">
+        <div class="admin-content">
+            <h3><i class="fa-solid fa-gear"></i> Panel Admin Link</h3>
+            <div id="admin-link-list"></div>
+            <div class="admin-note">
+                *Tombol "Simpan & Unduh" akan mengunduh file index.html baru. Segera unggah/timpa file tersebut ke Netlify agar perubahan diterapkan untuk semua orang.
+            </div>
+            <div class="admin-btns">
+                <button class="btn-cancel" onclick="closeAdmin()">Batal</button>
+                <button class="btn-save" onclick="saveAndDownload()">Simpan & Unduh File</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyLink(url) {
+            navigator.clipboard.writeText(url).then(() => {
+                showToast();
+            }).catch(err => {
+                const tempInput = document.createElement("input");
+                tempInput.value = url;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempInput);
+                showToast();
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        function bukaPenilaian() {
+            const pin = prompt("Masukkan PIN Khusus Guru:");
+            if(pin === "GURU61") {
+                document.getElementById('wrapper-penilaian').style.display = 'block';
+                document.getElementById('btn-akses-nilai').style.display = 'none';
+            } else if (pin !== null) {
+                alert("PIN salah! Akses ditolak.");
+            }
+        }
+
+        const linkIds = [
+            { id: 'modul-7', label: 'Modul Kelas 7' },
+            { id: 'modul-8', label: 'Modul Kelas 8' },
+            { id: 'modul-9', label: 'Modul Kelas 9' },
+            { id: 'lkm-7', label: 'Pengumpulan Kelas 7' },
+            { id: 'lkm-8', label: 'Pengumpulan Kelas 8' },
+            { id: 'lkm-9', label: 'Pengumpulan Kelas 9' },
+            { id: 'admin-nilai', label: 'Folder Penilaian (Terkunci)' },
+            { id: 'admin-diag', label: 'Diagnostik Hari Terakhir' },
+            { id: 'admin-ppid', label: 'Dokumentasi PPID' }
+        ];
+
+        function openAdmin() {
+            const password = prompt("Masukkan Kode Keamanan Admin:");
+            if(password === "D6655ALO") {
+                const listContainer = document.getElementById('admin-link-list');
+                listContainer.innerHTML = ''; 
+                
+                linkIds.forEach(item => {
+                    const currentUrl = document.getElementById(`link-${item.id}`).getAttribute('href');
+                    listContainer.innerHTML += `
+                        <div class="admin-input-group">
+                            <label>${item.label}</label>
+                            <input type="text" id="input-${item.id}" value="${currentUrl}">
+                        </div>
+                    `;
+                });
+                document.getElementById('admin-modal').style.display = 'flex';
+            } else if (password !== null) {
+                alert("Kode salah! Akses ditolak.");
+            }
+        }
+
+        function closeAdmin() {
+            document.getElementById('admin-modal').style.display = 'none';
+        }
+
+        function saveAndDownload() {
+            linkIds.forEach(item => {
+                const newUrl = document.getElementById(`input-${item.id}`).value;
+                document.getElementById(`link-${item.id}`).setAttribute('href', newUrl);
+                document.getElementById(`copy-${item.id}`).setAttribute('onclick', `copyLink('${newUrl}')`);
+            });
+
+            closeAdmin();
+
+            const htmlContent = "<!DOCTYPE html>\n<html lang=\"id\">\n" + document.documentElement.innerHTML + "\n</html>";
+            const blob = new Blob([htmlContent], {type: "text/html;charset=utf-8"});
+            const downloadLink = document.createElement("a");
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = "index.html"; 
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            
+            alert("Berhasil! File 'index.html' terbaru telah diunduh ke komputer/HP Anda.\n\nSilakan unggah (drag and drop) file terbaru tersebut ke Netlify Anda.");
+        }
+    </script>
+</body>
+</html>
